@@ -41,9 +41,6 @@ public class IsLaunch {
         try {
             Is is = new Is(longFormat, humanReadable, reverse);
             is.writeIs(inputFile, outputFile);
-            System.out.println("Фходной файл обработан успешно.");
-            System.out.println("Конец программы.");
-
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }

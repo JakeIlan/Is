@@ -1,8 +1,6 @@
 package Is;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Arrays;
 
 public final class Is {
@@ -22,33 +20,36 @@ public final class Is {
     }
 
     public void writeIs(String inputFile, String outputFile) throws IOException {
-        if (inputFile.equals(null)) {
-            System.err.println("Incorrect Input path.");
+        if (inputFile == null) {
+            System.err.println("Input error.");
         } else {
             File file = new File(inputFile);
             if (!file.exists()) {
-                System.err.println("Input file don't exists.");
+                System.err.println("Input error.");
             } else {
                 if (file.isDirectory()) {
-                    IsFile filter = new IsFile();
-                    File[] listOfFiles = file.listFiles(filter);
+                    File[] listOfFiles = file.listFiles();
                     try {
                         if (listOfFiles.length == 0) {
-                            System.out.println("Specified directory contains no files.");
+                            System.out.println("Directory is empty.");
                         } else {
                             String[] list = new String[listOfFiles.length];
                             for (int i = 0; i < listOfFiles.length; i++) {
                                 list[i] = listOfFiles[i].getName();
                             }
                             Arrays.sort(list);
-                            if (!reverse) {
-                                for (int i = 0; i < list.length; i++) {
-                                    System.out.println(list[i]);
+                            if (outputFile.equals("")) {
+                                if (!reverse) {
+                                    for (int i = 0; i < list.length; i++) {
+                                        System.out.println(list[i]);
+                                    }
+                                } else {
+                                    for (int i = list.length - 1; i >= 0; i--) {
+                                        System.out.println(list[i]);
+                                    }
                                 }
                             } else {
-                                for (int i = list.length; i > 0; i--) {
-                                    System.out.println(list[i]);
-                                }
+                                write(list,outputFile);
                             }
                         }
                     } catch (NullPointerException e) {
@@ -59,10 +60,24 @@ public final class Is {
         }
     }
 
-    class IsFile implements FileFilter {
-        public boolean accept(File path) {
-            return path.isFile();
+    public void write (String[] list, String outputFile) {
+        try{
+            PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(outputFile)));
+            if (!reverse) {
+                for (int i = 0; i < list.length; i++) {
+                    writer.println(list[i]);
+                }
+                writer.flush();
+                writer.close();
+            } else {
+                for (int i = list.length - 1; i >= 0; i--) {
+                    writer.println(list[i]);
+                }
+                writer.flush();
+                writer.close();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
-
 }
