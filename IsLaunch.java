@@ -18,7 +18,7 @@ public class IsLaunch {
     private boolean reverse = false;
 
     @Option(name = "-o", usage = "имя выходного файла")
-    private String outputFile;
+    private String outputFile = "";
 
     @Argument(metaVar = "InPath", usage = "Input file path")
     private String inputFile;
