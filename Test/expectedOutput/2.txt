@@ -1,0 +1,5 @@
+text file 3.txt
+text file 2.txt
+text file 1.txt
+painting.bmp
+directory
